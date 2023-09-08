@@ -1,0 +1,4 @@
+repository "PlatformerSPD@Jaanek_SchoolProjects@cloud"
+  path "/"
+    br "/main"
+    co "/main"
