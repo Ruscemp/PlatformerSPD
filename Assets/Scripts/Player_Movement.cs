@@ -1,61 +1,56 @@
-using NaughtyAttributes;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TagAttribute = NaughtyAttributes.TagAttribute;
 
 public class Player_Movement : MonoBehaviour
 {
     #region Ground Detection
-    [Foldout("Ground Detection"), SerializeField] private Transform L_Foot;
-    [Foldout("Ground Detection"), SerializeField] private Transform R_Foot;
-    [Foldout("Ground Detection"), SerializeField] private float rayDistance = 0.25f;
-    [Foldout("Ground Detection"), SerializeField] private LayerMask whatIsGround;
+    [SerializeField] private Transform L_Foot;
+    [SerializeField] private Transform R_Foot;
+    [SerializeField] private float rayDistance = 0.25f;
+    [SerializeField] private LayerMask whatIsGround;
     #endregion
     #region Sound
-    [Foldout("Sound"), SerializeField, MinValue(0f), MaxValue(1f), Range(0f, 1f), Label("Jump Volume")]
+    [SerializeField, Range(0f, 1f)]
     private float Jump_Volume;
-    [Foldout("Sound"), SerializeField, Label("Jump Sounds")] private AudioClip[] Jump_Sounds;
-    [Foldout("Sound"), SerializeField, MinValue(0f), MaxValue(1f), Range(0f, 1f), Label("Pickup Volume")]
+    [SerializeField] private AudioClip[] Jump_Sounds;
+    [SerializeField, Range(0f, 1f)]
     private float Pickup_Volume;
-    [Foldout("Sound"), SerializeField, MinValue(0f), MaxValue(1f), Range(0f, 1f), Label("Quest Pickup Volume")]
+    [SerializeField, Range(0f, 1f)]
     private float Quest_Pickup_Volume;
-    [Foldout("Sound"), SerializeField, Label("Pickup Sounds")] private AudioClip[] Pickup_Sounds;
-    [Foldout("Sound"), SerializeField, MinValue(0f), MaxValue(1f), Range(0f, 1f), Label("Hurt Volume")]
+    [SerializeField] private AudioClip[] Pickup_Sounds;
+    [SerializeField, Range(0f, 1f)]
     private float Hurt_Volume;
-    [Foldout("Sound"), SerializeField, Label("Hurt Sounds")] private AudioClip[] Hurt_Sounds;
-    [Foldout("Sound"), SerializeField, MinValue(0f), MaxValue(1f), Range(0f, 1f), Label("Death Volume")]
+    [SerializeField] private AudioClip[] Hurt_Sounds;
+    [SerializeField, Range(0f, 1f)]
     private float Death_Volume;
-    [Foldout("Sound"), SerializeField, Label("Death Sounds")] private AudioClip[] Death_Sounds;
+    [SerializeField] private AudioClip[] Death_Sounds;
     #endregion
     #region Health
-    [Foldout("Health"), SerializeField] private float HP_Start = 10f;
-    [Foldout("Health"), SerializeField] private float HP_Current;
-    [Foldout("Health"), SerializeField] private float HP_Max = 10f;
+    [SerializeField] private float HP_Start = 10f;
+    [SerializeField] private float HP_Current;
+    [SerializeField] private float HP_Max = 10f;
     #endregion
     #region Move Stats
-    [Foldout("Move Stats"), SerializeField] private float Move_Speed = 150f;
-    [Foldout("Move Stats"), SerializeField] private float jumpForce = 230f;
+    [SerializeField] private float Move_Speed = 150f;
+    [SerializeField] private float jumpForce = 230f;
     #endregion
     #region Transform Points
-    [SerializeField, Foldout("Transform Points"), Required] private Transform Spawn_Point;
+    [SerializeField] private Transform Spawn_Point;
     #endregion
     #region UI Objects
-    [Foldout("UI Objects"), SerializeField, Required] private Slider Health_Slider;
-    [Foldout("UI Objects"), SerializeField, Required] private Image Health_Slider_Fill;
-    [Foldout("UI Objects"), SerializeField, Required] private TMP_Text Health_Counter, Quest_Counter;
-    [Foldout("UI Objects"), SerializeField] private Color Health_Color_Min, Health_Color_Middle, Health_Color_Max;
+    [SerializeField] private Slider Health_Slider;
+    [SerializeField] private Image Health_Slider_Fill;
+    [SerializeField] private TMP_Text Health_Counter, Quest_Counter;
+    [SerializeField] private Color Health_Color_Min, Health_Color_Middle, Health_Color_Max;
     #endregion
     #region Particles
-    [Foldout("Particles"), SerializeField, Required, Label("Apple")] private GameObject Apple_Particles;
-    [Foldout("Particles"), SerializeField, Required, Label("Dust/Jump")] private GameObject Dust_Particles;
+    [SerializeField] private GameObject Apple_Particles;
+    [SerializeField] private GameObject Dust_Particles;
     #endregion
     #region Questing
-    [Foldout("Questing")]
     public int QuestItems_Collected = 0;
-    [Foldout("Questing")]
     public int QuestItems_Target_Count = 0;
-    [Foldout("Questing"), Tag]
     public string QuestItems_Target_Tag;
     #endregion
     #region Private Variables

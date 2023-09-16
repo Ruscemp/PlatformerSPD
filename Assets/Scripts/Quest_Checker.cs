@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Quest_Checker : MonoBehaviour
 {
@@ -10,9 +12,12 @@ public class Quest_Checker : MonoBehaviour
     [SerializeField] private TextMeshProUGUI Quest_End_Popup_Text;
     [TextArea(10, 10)][SerializeField] private string Quest_End_Finished_Text, Quest_End_Unfinished_Text;
     [SerializeField] private AudioClip[] Cheer_Sounds, Alert_Sounds;
-
+    [SerializeField] private int Level_to_load;
+    [SerializeField] private int Level_to_load_Delay;
+    
     private Animator anim;
     private AudioSource Audio_Source;
+    private bool Level_is_loading = false;
 
     private void Start()
     {
@@ -35,7 +40,8 @@ public class Quest_Checker : MonoBehaviour
                 Player.UpdateQuest(null);
                 PlaySound(Cheer_Sounds);
                 anim.SetTrigger("Flag");
-                // TODO: Change level
+
+                Invoke(nameof(LeadNextLevel), Level_to_load_Delay);
             }
             else
             {
@@ -43,6 +49,11 @@ public class Quest_Checker : MonoBehaviour
                 PlaySound(Alert_Sounds);
             }
         }
+    }
+    private void LeadNextLevel()
+    {
+        Level_is_loading = true;
+        SceneManager.LoadScene(Level_to_load);
     }
     private void PlaySound(AudioClip[] sounds)
     {
@@ -53,7 +64,7 @@ public class Quest_Checker : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && !Level_is_loading)
         {
             Quest_End_Popup.SetActive(false);
         }

@@ -1,4 +1,3 @@
-using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,8 +6,8 @@ public class Wall_Fall : MonoBehaviour
 {
     [SerializeField] private GameObject Button;
 
-    [Foldout("Sound")][SerializeField][Label("Volume")][MinValue(0f), MaxValue(1f)] private float Sound_Volume = 1f;
-    [Foldout("Sound")][SerializeField][Label("Activation Sounds")] private AudioClip[] Activation_Sounds;
+    [SerializeField, Range(0f, 1f)] private float Sound_Volume = 1f;
+    [SerializeField] private AudioClip[] Activation_Sounds;
 
     private Animator anim;
     private AudioSource Audio_Source;
