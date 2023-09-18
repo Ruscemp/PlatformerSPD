@@ -10,6 +10,7 @@ TagManager:
   - Apple
   - Strawberry
   - HP_Plus
+  - Damage
   layers:
   - Default
   - TransparentFX

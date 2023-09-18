@@ -59,10 +59,11 @@ public class Enemy_Movement : MonoBehaviour
         Audio_Source.pitch = Random.Range(0.75f, 1.25f);
         Audio_Source.PlayOneShot(Death_Sounds[RandomIndex], 0.5f);
     }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
-        {
+        { //death
             other.GetComponent<Rigidbody2D>().velocity = new Vector2(other.GetComponent<Rigidbody2D>().velocity.x, 0);
             other.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, bounciness));
             PlayDeathSound(other.GetComponent<AudioSource>());
