@@ -27,4 +27,11 @@ public class ShowPopUp : MonoBehaviour
             PopupToShow.SetActive(true);
         }
     }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            PopupToShow.SetActive(false);
+        }
+    }
 }

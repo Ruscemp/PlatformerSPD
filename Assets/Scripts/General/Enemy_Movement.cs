@@ -40,7 +40,6 @@ public class Enemy_Movement : MonoBehaviour
                 break;
             case "Player":
                 other.gameObject.GetComponent<Player_Movement>().TakeDamage(Damage_Given);
-
                 if(other.transform.position.x > transform.position.x)
                 {
                     other.gameObject.GetComponent<Player_Movement>().TakeKnockback(Knockback_Force, Knockback_Upward, Knockback_Time);
@@ -49,7 +48,6 @@ public class Enemy_Movement : MonoBehaviour
                 {
                     other.gameObject.GetComponent<Player_Movement>().TakeKnockback(-Knockback_Force, Knockback_Upward, Knockback_Time);
                 }
-
                 break;
         }
     }
