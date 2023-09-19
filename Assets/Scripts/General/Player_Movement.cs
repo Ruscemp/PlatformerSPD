@@ -12,6 +12,7 @@ public class Player_Movement : MonoBehaviour
     [SerializeField, Foldout("Ground Detection")] private float rayDistance = 0.25f;
     [SerializeField, Foldout("Ground Detection"), Required] private LayerMask whatIsGround;
     #endregion
+
     #region Sound
     [SerializeField, Range(0f, 1f), Foldout("Sound")]
     private float Jump_Volume;
@@ -28,11 +29,13 @@ public class Player_Movement : MonoBehaviour
     private float Death_Volume;
     [SerializeField, Foldout("Sound"), Required] private AudioClip[] Death_Sounds;
     #endregion
+
     #region Health
     [SerializeField, Foldout("Health")] private float HP_Start = 10f;
     [SerializeField, Foldout("Health")] private float HP_Current;
     [SerializeField, Foldout("Health")] private float HP_Max = 10f;
     #endregion
+
     #region Move Stats
     [SerializeField, Foldout("Move Stats")] private float Move_Speed = 150f;
     [SerializeField, Foldout("Move Stats")] private float jumpForce = 230f;
@@ -40,24 +43,29 @@ public class Player_Movement : MonoBehaviour
     [SerializeField, Foldout("Move Stats")] private float DashingTime = 0.2f;
     [SerializeField, Foldout("Move Stats")] private float DashingCooldown = 1f;
     #endregion
+
     #region Transform Points
     [SerializeField, Foldout("Transform Points"), Required] private Transform Spawn_Point;
     #endregion
+
     #region UI Objects
     [SerializeField, Foldout("UI Objects"), Required] private Slider Health_Slider;
     [SerializeField, Foldout("UI Objects"), Required] private Image Health_Slider_Fill;
     [SerializeField, Foldout("UI Objects"), Required] private TMP_Text Health_Counter, Quest_Counter;
-    [SerializeField, Foldout("UI Objects"), Required] private Color Health_Color_Min, Health_Color_Middle, Health_Color_Max;
+    [SerializeField, Foldout("UI Objects")] private Color Health_Color_Min, Health_Color_Middle, Health_Color_Max;
     #endregion
+
     #region Particles
     [SerializeField, Foldout("Particles"), Required] private GameObject Apple_Particles;
     [SerializeField, Foldout("Particles"), Required] private GameObject Dust_Particles;
     #endregion
+
     #region Questing
     [Foldout("Questing")] public int QuestItems_Collected = 0;
     [Foldout("Questing")] public int QuestItems_Target_Count = 0;
     [Foldout("Questing")] public string QuestItems_Target_Tag;
     #endregion
+
     #region Private Variables
     #region Normal
     private float horizontalValue;
@@ -67,6 +75,7 @@ public class Player_Movement : MonoBehaviour
     private bool canDash = true;
     private bool isDashing;
     #endregion
+
     #region Unity
     private Rigidbody2D Rigidbody;
     private SpriteRenderer Sprite_Renderer;
@@ -244,6 +253,7 @@ public class Player_Movement : MonoBehaviour
 
             PlaySound(Pickup_Sounds, Quest_Pickup_Volume);
         }
+        Quest_Counter.transform.parent.gameObject.SetActive(true);
         Quest_Counter.text = $"{QuestItems_Collected}/{QuestItems_Target_Count}";
     }
     private void PlaySound(AudioClip[] sounds, float volume)
