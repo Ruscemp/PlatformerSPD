@@ -16,10 +16,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Static_Platforms Variant
       objectReference: {fileID: 0}
-    - target: {fileID: 7069071544175983808, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
-      propertyPath: m_VertexDistance
-      value: 0.05
-      objectReference: {fileID: 0}
     - target: {fileID: 8910678335016068037, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -61,6 +61,7 @@ public class Player_Movement : MonoBehaviour
     #region Private Variables
     #region Normal
     private float horizontalValue;
+    private bool isFacingRight = true;
     private bool isGrounded;
     private bool canMove = true;
     private bool canDash = true;
@@ -110,7 +111,7 @@ public class Player_Movement : MonoBehaviour
         isDashing = true;
         float originalGravity = Rigidbody.gravityScale;
         Rigidbody.gravityScale = 0f;
-        Rigidbody.velocity = new Vector2(horizontalValue * DashingPower, 0f);
+        Rigidbody.velocity = new Vector2(transform.localScale.x * DashingPower, 0f);
         Dash_Trail.emitting = true;
         yield return new WaitForSeconds(DashingTime);
         Dash_Trail.emitting = false;
@@ -145,13 +146,12 @@ public class Player_Movement : MonoBehaviour
     }
     private void FlippingSprite()
     {
-        if (horizontalValue < 0)
+        if (isFacingRight && horizontalValue < 0f || !isFacingRight && horizontalValue > 0f)
         {
-            Sprite_Renderer.flipX = true;
-        }
-        else if (horizontalValue > 0)
-        {
-            Sprite_Renderer.flipX = false;
+            Vector3 localScale = transform.localScale;
+            isFacingRight = !isFacingRight;
+            localScale.x *= -1f;
+            transform.localScale = localScale;
         }
     }
     private void Jump()
