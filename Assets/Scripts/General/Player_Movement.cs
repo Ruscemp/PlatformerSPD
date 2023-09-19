@@ -1,3 +1,5 @@
+using NaughtyAttributes;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,68 +7,73 @@ using UnityEngine.UI;
 public class Player_Movement : MonoBehaviour
 {
     #region Ground Detection
-    [SerializeField] private Transform L_Foot;
-    [SerializeField] private Transform R_Foot;
-    [SerializeField] private float rayDistance = 0.25f;
-    [SerializeField] private LayerMask whatIsGround;
+    [SerializeField, Foldout("Ground Detection"), Required] private Transform L_Foot;
+    [SerializeField, Foldout("Ground Detection"), Required] private Transform R_Foot;
+    [SerializeField, Foldout("Ground Detection")] private float rayDistance = 0.25f;
+    [SerializeField, Foldout("Ground Detection"), Required] private LayerMask whatIsGround;
     #endregion
     #region Sound
-    [SerializeField, Range(0f, 1f)]
+    [SerializeField, Range(0f, 1f), Foldout("Sound")]
     private float Jump_Volume;
-    [SerializeField] private AudioClip[] Jump_Sounds;
-    [SerializeField, Range(0f, 1f)]
+    [SerializeField, Foldout("Sound"), Required] private AudioClip[] Jump_Sounds;
+    [SerializeField, Range(0f, 1f), Foldout("Sound")]
     private float Pickup_Volume;
-    [SerializeField, Range(0f, 1f)]
+    [SerializeField, Range(0f, 1f), Foldout("Sound")]
     private float Quest_Pickup_Volume;
-    [SerializeField] private AudioClip[] Pickup_Sounds;
-    [SerializeField, Range(0f, 1f)]
+    [SerializeField, Foldout("Sound"), Required] private AudioClip[] Pickup_Sounds;
+    [SerializeField, Range(0f, 1f), Foldout("Sound")]
     private float Hurt_Volume;
-    [SerializeField] private AudioClip[] Hurt_Sounds;
-    [SerializeField, Range(0f, 1f)]
+    [SerializeField, Foldout("Sound"), Required] private AudioClip[] Hurt_Sounds;
+    [SerializeField, Range(0f, 1f), Foldout("Sound")]
     private float Death_Volume;
-    [SerializeField] private AudioClip[] Death_Sounds;
+    [SerializeField, Foldout("Sound"), Required] private AudioClip[] Death_Sounds;
     #endregion
     #region Health
-    [SerializeField] private float HP_Start = 10f;
-    [SerializeField] private float HP_Current;
-    [SerializeField] private float HP_Max = 10f;
+    [SerializeField, Foldout("Health")] private float HP_Start = 10f;
+    [SerializeField, Foldout("Health")] private float HP_Current;
+    [SerializeField, Foldout("Health")] private float HP_Max = 10f;
     #endregion
     #region Move Stats
-    [SerializeField] private float Move_Speed = 150f;
-    [SerializeField] private float jumpForce = 230f;
+    [SerializeField, Foldout("Move Stats")] private float Move_Speed = 150f;
+    [SerializeField, Foldout("Move Stats")] private float jumpForce = 230f;
+    [SerializeField, Foldout("Move Stats")] private float DashingPower = 25f;
+    [SerializeField, Foldout("Move Stats")] private float DashingTime = 0.2f;
+    [SerializeField, Foldout("Move Stats")] private float DashingCooldown = 1f;
     #endregion
     #region Transform Points
-    [SerializeField] private Transform Spawn_Point;
+    [SerializeField, Foldout("Transform Points"), Required] private Transform Spawn_Point;
     #endregion
     #region UI Objects
-    [SerializeField] private Slider Health_Slider;
-    [SerializeField] private Image Health_Slider_Fill;
-    [SerializeField] private TMP_Text Health_Counter, Quest_Counter;
-    [SerializeField] private Color Health_Color_Min, Health_Color_Middle, Health_Color_Max;
+    [SerializeField, Foldout("UI Objects"), Required] private Slider Health_Slider;
+    [SerializeField, Foldout("UI Objects"), Required] private Image Health_Slider_Fill;
+    [SerializeField, Foldout("UI Objects"), Required] private TMP_Text Health_Counter, Quest_Counter;
+    [SerializeField, Foldout("UI Objects"), Required] private Color Health_Color_Min, Health_Color_Middle, Health_Color_Max;
     #endregion
     #region Particles
-    [SerializeField] private GameObject Apple_Particles;
-    [SerializeField] private GameObject Dust_Particles;
+    [SerializeField, Foldout("Particles"), Required] private GameObject Apple_Particles;
+    [SerializeField, Foldout("Particles"), Required] private GameObject Dust_Particles;
     #endregion
     #region Questing
-    public int QuestItems_Collected = 0;
-    public int QuestItems_Target_Count = 0;
-    public string QuestItems_Target_Tag;
+    [Foldout("Questing")] public int QuestItems_Collected = 0;
+    [Foldout("Questing")] public int QuestItems_Target_Count = 0;
+    [Foldout("Questing")] public string QuestItems_Target_Tag;
     #endregion
     #region Private Variables
     #region Normal
     private float horizontalValue;
     private bool isGrounded;
     private bool canMove = true;
+    private bool canDash = true;
+    private bool isDashing;
     #endregion
     #region Unity
     private Rigidbody2D Rigidbody;
     private SpriteRenderer Sprite_Renderer;
     private Animator Animator;
     private AudioSource Audio_Source;
+    private TrailRenderer Dash_Trail;
     #endregion
     #endregion
-
 
     void Start()
     {
@@ -74,10 +81,13 @@ public class Player_Movement : MonoBehaviour
         Sprite_Renderer = GetComponent<SpriteRenderer>();
         Animator = GetComponent<Animator>();
         Audio_Source = GetComponent<AudioSource>();
+        Dash_Trail = GetComponent<TrailRenderer>();
         Spawn();
     }
     void Update()
     {
+        if (isDashing) return;
+
         isGrounded = CheckIfGrounded();
         horizontalValue = Input.GetAxis("Horizontal");
 
@@ -86,12 +96,33 @@ public class Player_Movement : MonoBehaviour
         {
             Jump();
         }
+        if (Input.GetAxis("Fire3")==1 && canDash)
+        {
+            StartCoroutine(Dash());
+        }
         Animator.SetFloat("Move_Speed", Mathf.Abs(Rigidbody.velocity.x));
         Animator.SetFloat("Vertical_Speed", Rigidbody.velocity.y);
         Animator.SetBool("isGrounded", isGrounded);
     }
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = Rigidbody.gravityScale;
+        Rigidbody.gravityScale = 0f;
+        Rigidbody.velocity = new Vector2(horizontalValue * DashingPower, 0f);
+        Dash_Trail.emitting = true;
+        yield return new WaitForSeconds(DashingTime);
+        Dash_Trail.emitting = false;
+        Rigidbody.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(DashingCooldown);
+        canDash = true;
+    }
     private void FixedUpdate()
     {
+        if (isDashing) return;
+
         if (!canMove)
         {
             return;

@@ -8,9 +8,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2667059009655482161, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
+      propertyPath: m_UseOneWayGrouping
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4676071983979598988, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
       propertyPath: m_Name
       value: Static_Platforms Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 7069071544175983808, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
+      propertyPath: m_VertexDistance
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 8910678335016068037, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -55,5 +63,25 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4676071983979598988, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4894050521502197197}
   m_SourcePrefab: {fileID: 100100000, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
+--- !u!1 &1037902866640653410 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4676071983979598988, guid: e5f76781638c88f45a1b633fd91fd87d, type: 3}
+  m_PrefabInstance: {fileID: 5657613607110400238}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4894050521502197197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1037902866640653410}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164c5f70b3fdbe34bb0b6a2c71d0853b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
