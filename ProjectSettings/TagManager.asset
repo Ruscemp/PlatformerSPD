@@ -11,6 +11,7 @@ TagManager:
   - Strawberry
   - HP_Plus
   - Damage
+  - KillZone
   layers:
   - Default
   - TransparentFX
