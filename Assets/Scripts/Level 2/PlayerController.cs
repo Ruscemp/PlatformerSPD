@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Health
-    [SerializeField, Foldout("Health")] private float HP_Start = 10f;
+    //[SerializeField, Foldout("Health")] private float HP_Start = 10f;
     [SerializeField, Foldout("Health")] private float HP_Current;
     [SerializeField, Foldout("Health")] private float HP_Max = 10f;
     #endregion
