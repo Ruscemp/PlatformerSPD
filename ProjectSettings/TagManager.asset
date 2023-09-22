@@ -12,6 +12,7 @@ TagManager:
   - HP_Plus
   - Damage
   - KillZone
+  - PartOfPlatform
   layers:
   - Default
   - TransparentFX
@@ -24,7 +25,7 @@ TagManager:
   - Enemy_Block
   - Player
   - Platforms
-  - 
+  - PartOfPlatform
   - 
   - 
   - 
