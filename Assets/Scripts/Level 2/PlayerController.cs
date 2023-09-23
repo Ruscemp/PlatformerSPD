@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Foldout("Move Stats")] private float jumpForce = 230f;
     [SerializeField, Foldout("Move Stats")] private float DashingPower = 25f;
     [SerializeField, Foldout("Move Stats")] private float DashingTime = 0.2f;
-    [SerializeField, Foldout("Move Stats")] private float DashingCooldown = 1f;
+    [SerializeField, Foldout("Move Stats")] private float DashingCooldown = 0.4f;
     #endregion
 
     #region UI Objects
