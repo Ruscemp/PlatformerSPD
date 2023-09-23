@@ -13,6 +13,7 @@ TagManager:
   - Damage
   - KillZone
   - PartOfPlatform
+  - BossTrigger
   layers:
   - Default
   - TransparentFX

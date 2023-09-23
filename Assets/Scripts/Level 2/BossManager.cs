@@ -48,6 +48,11 @@ public class BossManager : MonoBehaviour
             platformRigid.AddForce(baseBreakForce * breakForceMulti, ForceMode2D.Impulse);
             platformRigid.AddTorque(baseBreakRotation * breakRotMulti, ForceMode2D.Impulse);
         }
+        else if(collision.CompareTag("BossTrigger"))
+        {
+            speed = collision.GetComponent<BossInstructions>().GetSpeed();
+            Destroy(collision.gameObject);
+        }
     }
 
     void ReloadScene() 
