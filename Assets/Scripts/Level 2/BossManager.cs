@@ -12,6 +12,10 @@ public class BossManager : MonoBehaviour
 
     CameraFollow cameraFollow;
 
+    [SerializeField] AudioClip deathSound;
+
+    AudioSource audioSource;
+
     float speed = 5;
     float breakForceMulti = 1.5f;
     float breakRotMulti = 1.5f;
@@ -21,6 +25,7 @@ public class BossManager : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Player_BossVer");
         cameraFollow = GameObject.Find("Main Camera").GetComponent<CameraFollow>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -32,9 +37,10 @@ public class BossManager : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
+            audioSource.PlayOneShot(deathSound, 1);
             cameraFollow.enabled = false;
             player.SetActive(false);
-            Invoke("ReloadScene", 1);
+            Invoke("ReloadScene", 1.7f);
         }
         else if(collision.CompareTag("PartOfPlatform"))
         {

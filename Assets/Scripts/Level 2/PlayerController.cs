@@ -75,6 +75,9 @@ public class PlayerController : MonoBehaviour
     #endregion
     #endregion
 
+    [SerializeField] AudioClip levelCompleteClip;
+    [SerializeField] AudioClip deathClip;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -204,6 +207,19 @@ public class PlayerController : MonoBehaviour
         return L_Hit.collider != null && L_Hit.collider.CompareTag("Ground") ||
                 R_Hit.collider != null && R_Hit.collider.CompareTag("Ground");
     }
+
+    public void PlayDeathSounds() 
+    {
+        audio_Source.PlayOneShot(deathClip, 1);
+    }
+
+    public void PlayLevelCompleteSound()
+    {
+        audio_Source.pitch = 1;
+        audio_Source.PlayOneShot(levelCompleteClip, 1);
+        print("Level complete sound should have played.");
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         string tag = other.tag;

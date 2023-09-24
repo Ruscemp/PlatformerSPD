@@ -18,8 +18,9 @@ public class KillZoneManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            collision.GetComponent<PlayerController>().PlayDeathSounds();
             cameraFollow.enabled = false;
-            Invoke("ReloadScene", 1);
+            Invoke("ReloadScene", 1.7f);
         }
     }
 
