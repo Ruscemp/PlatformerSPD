@@ -217,7 +217,6 @@ public class PlayerController : MonoBehaviour
     {
         audio_Source.pitch = 1;
         audio_Source.PlayOneShot(levelCompleteClip, 1);
-        print("Level complete sound should have played.");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
