@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     #endregion
 
     #region Health
-    [SerializeField, Foldout("Health")] private float HP_Start = 10f;
+    //[SerializeField, Foldout("Health")] private float HP_Start = 10f;
     [SerializeField, Foldout("Health")] private float HP_Current;
     [SerializeField, Foldout("Health")] private float HP_Max = 10f;
     #endregion
@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField, Foldout("Move Stats")] private float jumpForce = 230f;
     [SerializeField, Foldout("Move Stats")] private float DashingPower = 25f;
     [SerializeField, Foldout("Move Stats")] private float DashingTime = 0.2f;
-    [SerializeField, Foldout("Move Stats")] private float DashingCooldown = 1f;
+    [SerializeField, Foldout("Move Stats")] private float DashingCooldown = 0.4f;
     #endregion
 
     #region UI Objects
@@ -74,6 +74,9 @@ public class PlayerController : MonoBehaviour
     private TrailRenderer dash_Trail;
     #endregion
     #endregion
+
+    [SerializeField] AudioClip levelCompleteClip;
+    [SerializeField] AudioClip deathClip;
 
     void Start()
     {
@@ -204,6 +207,18 @@ public class PlayerController : MonoBehaviour
         return L_Hit.collider != null && L_Hit.collider.CompareTag("Ground") ||
                 R_Hit.collider != null && R_Hit.collider.CompareTag("Ground");
     }
+
+    public void PlayDeathSounds() 
+    {
+        audio_Source.PlayOneShot(deathClip, 1);
+    }
+
+    public void PlayLevelCompleteSound()
+    {
+        audio_Source.pitch = 1;
+        audio_Source.PlayOneShot(levelCompleteClip, 1);
+    }
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         string tag = other.tag;
