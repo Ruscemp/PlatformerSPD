@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
+    [SerializeField] private LayerMask passthroughColliderMask;
+    private LayerMask originalColliderMask;
     private PlatformEffector2D effector;
     private float waitTime;
 
     void Start()
     {
         effector = GetComponent<PlatformEffector2D>();
+        originalColliderMask = effector.colliderMask;
     }
 
     // Update is called once per frame
@@ -19,14 +22,14 @@ public class Platform : MonoBehaviour
         if (vert > -1)
         {
             waitTime = 0.2f;
-            effector.rotationalOffset = 0f;
+            effector.colliderMask = originalColliderMask;
         }
 
         if(vert == -1)
         {
             if (waitTime <= 0)
-            {
-                effector.rotationalOffset = 180f;
+            {;
+                effector.colliderMask = passthroughColliderMask;
                 waitTime = 0;
             }
             else
