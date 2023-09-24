@@ -85,6 +85,8 @@ public class Player_Movement : MonoBehaviour
     #endregion
     #endregion
 
+    [SerializeField] AudioClip dashSound;
+
     void Start()
     {
         Rigidbody = GetComponent<Rigidbody2D>();
@@ -122,6 +124,7 @@ public class Player_Movement : MonoBehaviour
         Rigidbody.gravityScale = 0f;
         Rigidbody.velocity = new Vector2(transform.localScale.x * DashingPower, 0f);
         Dash_Trail.emitting = true;
+        Audio_Source.PlayOneShot(dashSound, 1);
         yield return new WaitForSeconds(DashingTime);
         Dash_Trail.emitting = false;
         Rigidbody.gravityScale = originalGravity;
