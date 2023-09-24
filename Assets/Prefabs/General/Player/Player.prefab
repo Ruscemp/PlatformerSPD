@@ -213,6 +213,7 @@ MonoBehaviour:
   QuestItems_Collected: 0
   QuestItems_Target_Count: 0
   QuestItems_Target_Tag: 
+  dashSound: {fileID: 8300000, guid: e1f589a7b26e21042b51d180b3a3d78c, type: 3}
 --- !u!95 &4589136955156945852
 Animator:
   serializedVersion: 5

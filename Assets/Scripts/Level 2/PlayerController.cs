@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] AudioClip levelCompleteClip;
     [SerializeField] AudioClip deathClip;
+    [SerializeField] AudioClip dashClip;
 
     void Start()
     {
@@ -114,6 +115,7 @@ public class PlayerController : MonoBehaviour
         rigid.gravityScale = 0f;
         rigid.velocity = new Vector2(transform.localScale.x * DashingPower, 0f);
         dash_Trail.emitting = true;
+        audio_Source.PlayOneShot(dashClip, 1);
         yield return new WaitForSeconds(DashingTime);
         dash_Trail.emitting = false;
         rigid.gravityScale = originalGravity;

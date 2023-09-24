@@ -21764,6 +21764,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1306636639}
     - target: {fileID: 7004844806067244756, guid: 281fa1285dec8cd4bb06a3fdcd5009d6, type: 3}
+      propertyPath: dashClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e1f589a7b26e21042b51d180b3a3d78c, type: 3}
+    - target: {fileID: 7004844806067244756, guid: 281fa1285dec8cd4bb06a3fdcd5009d6, type: 3}
       propertyPath: deathClip
       value: 
       objectReference: {fileID: 8300000, guid: 7f1cdfe4053cf4647ab6306419766540, type: 3}
